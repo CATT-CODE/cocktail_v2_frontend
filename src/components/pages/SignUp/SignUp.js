@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SignUp.css";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-// import { checkIsUserLoggedIn } from "../lib/helpers";
+// import { checkIsUserLoggedIn } from "../../lib/helpers";
 import Axios from "../../lib/axios/Axios";
 
 import useSignUpHooks from "./useSignUpHooks";
@@ -94,7 +94,7 @@ function SignUp(props) {
               placeholder="First Name"
               name="firstName"
               value={firstName}
-						onChange={setFirstName}
+						  onChange={setFirstName}
               pattern="[A-Za-z]*"
               required
               autoFocus

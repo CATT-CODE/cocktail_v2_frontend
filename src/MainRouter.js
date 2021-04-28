@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import Home from "./components/pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import SignUp from "./components/pages/SignUp/SignUp";
-// import Login from "./components/pages/Login/Login";
+import Login from "./components/pages/Login/Login";
 // import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 // import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
 // import SearchIngredient from "./components/AuthUser/SearchIngredient";
@@ -36,13 +36,13 @@ const MainRouter = (props) => {
 					path="/recipe-detail/:id"
 					component={AuthCTDetail}
 				/> */}
-				{/* <Route
+				<Route
 					exact
 					path="/login"
 					render={(routerProps) => (
 						<Login {...routerProps} handleUserLogin={props.handleUserLogin} />
 					)}
-				/> */}
+				/>
 				<Route exact path="/sign-up" component={SignUp} />
 				{/* <Route exact path="/" component={Home} /> */}
 			</Switch>
