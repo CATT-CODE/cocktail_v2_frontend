@@ -3,9 +3,8 @@ import { useState } from 'react'
 function useSignUpHooks() {
 	const [input, setInput] = useState("")
 	
-	function handleOnChange(e) {
-		let inputValue = e.target.value;
-		setInput(inputValue)
+	function handleOnChange(event) {
+		setInput(event.target.value)
 	}
 	
 	return [input, handleOnChange]
