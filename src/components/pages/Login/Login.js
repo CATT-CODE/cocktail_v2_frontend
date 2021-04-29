@@ -23,8 +23,8 @@ function Login() {
 		e.preventDefault();
 		try {
 			let result = await Axios.post("/users/login", {
-				email: this.state.email,
-				password: this.state.password,
+				email,
+				password,
 			});
 
 			localStorage.setItem("jwtToken", result.data.jwtToken);
@@ -69,7 +69,7 @@ function Login() {
 						autoFocus
 						name="email"
 						value={email}
-						onChange={(e) => setEmail(e)}
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<label htmlFor="inputPassword" className="sr-only"/>
 					<input
@@ -80,7 +80,7 @@ function Login() {
 						required
 						name="password"
 						value={password}
-						onChange={null}
+						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button className="w-100 btn btn-lg btn-secondary" type="submit">
 						Login &raquo;

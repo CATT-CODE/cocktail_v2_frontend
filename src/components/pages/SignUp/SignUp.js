@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-// import { checkIsUserLoggedIn } from "../../lib/helpers";
+import { Link, useHistory } from "react-router-dom";
+import { checkIsUserLoggedIn } from "../../lib/helpers";
 import Axios from "../../lib/axios/Axios";
 
 import "./SignUp.css";
 // import useSignUpHooks from "./useSignUpHooks";
 
 function SignUp(props) {
+	const history = useHistory();
+
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
@@ -22,20 +24,28 @@ function SignUp(props) {
 	//   }
 	// }
 
+	useEffect(() => {
+		const navigate = async () => {
+			const authorized = await checkIsUserLoggedIn();
+
+			if (authorized) {
+				history.push("/");
+			}
+		};
+
+		navigate();
+	}, []);
+
 	async function handleOnSubmit(e) {
 		e.preventDefault();
 		try {
-			let result = await Axios.post("/users/sign-up", {
+			await Axios.post("/users/sign-up", {
 				firstName,
 				lastName,
 				email,
 				password,
 			});
-			setFirstName(firstName);
-			setLastName(lastName);
-			setEmail(email);
-			setPassword(password);
-			setConfirmPassword(confirmPassword);
+
 			props.history.push("/login");
 			toast.success("Sweet, lets mix a drink!", {
 				position: "top-center",
