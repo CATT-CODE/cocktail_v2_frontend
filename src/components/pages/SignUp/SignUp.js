@@ -16,14 +16,6 @@ function SignUp() {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 
-	// componentDidMount() {
-	//   if (checkIsUserLoggedIn()) {
-	//     this.props.history.push("/");
-	//   } else {
-	//     this.props.history.push("/sign-up");
-	//   }
-	// }
-
 	useEffect(() => {
 		const navigate = async () => {
 			const authorized = await checkIsUserLoggedIn();

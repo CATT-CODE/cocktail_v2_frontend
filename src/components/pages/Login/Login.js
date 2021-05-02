@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 import { Link, useHistory } from "react-router-dom";
-// import { checkIsUserLoggedIn } from "../lib/helpers";
+import { checkIsUserLoggedIn } from "../../lib/helpers";
 import Axios from "../../lib/axios/Axios";
 
 import "../SignUp/SignUp.css";
@@ -13,13 +13,18 @@ function Login(props) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
-	// componentDidMount() {
-	//  if (checkIsUserLoggedIn()) {
-	//    this.props.history.push("/");
-	//  } else {
-	//    this.props.history.push("/login");
-	//  }
-	// }
+	useEffect(() => {
+		const navigate = async () => {
+			const authorized = await checkIsUserLoggedIn();
+
+			if (authorized) {
+				history.push("/");
+				console.log(history);
+			}
+		};
+
+		navigate();
+	}, [])
 
 	async function handleLoginSubmit(e) {
 		e.preventDefault();

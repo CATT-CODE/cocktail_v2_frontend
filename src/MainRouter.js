@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-// import Home from "./components/pages/Home/Home";
+import Home from "./components/pages/Home/Home";
 import NavBar from "./components/NavBar/NavBar";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Login from "./components/pages/Login/Login";
-// import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/AuthUser/PrivateRoute/PrivateRoute";
 // import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
 // import SearchIngredient from "./components/AuthUser/SearchIngredient";
 // import RandomSelection from "./components/AuthUser/RandomSelection";
@@ -44,7 +44,7 @@ const MainRouter = (props) => {
 					)}
 				/>
 				<Route exact path="/sign-up" component={SignUp} />
-				{/* <Route exact path="/" component={Home} /> */}
+				<Route exact path="/" component={Home} />
 			</Switch>
 		</Router>
 	);
