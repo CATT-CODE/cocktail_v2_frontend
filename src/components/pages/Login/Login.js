@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import { checkIsUserLoggedIn } from "../lib/helpers";
 import Axios from "../../lib/axios/Axios";
 
 import "../SignUp/SignUp.css";
 
-function Login() {
+function Login(props) {
+		const history = useHistory();
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
@@ -31,9 +33,18 @@ function Login() {
 
 			let decodedJWToken = jwtDecode(result.data.jwtToken);
 
-			this.props.handleUserLogin(decodedJWToken);
+			props.handleUserLogin(decodedJWToken);
 
-			this.props.history.push("/");
+			history.push("/");
+			toast.success("Sweet, lets mix a drink!", {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 		} catch (e) {
 			console.log(e.message);
 			toast.error(e.message, {

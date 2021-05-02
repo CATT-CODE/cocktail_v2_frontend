@@ -7,7 +7,7 @@ import Axios from "../../lib/axios/Axios";
 import "./SignUp.css";
 // import useSignUpHooks from "./useSignUpHooks";
 
-function SignUp(props) {
+function SignUp() {
 	const history = useHistory();
 
 	const [firstName, setFirstName] = useState("");
@@ -30,6 +30,7 @@ function SignUp(props) {
 
 			if (authorized) {
 				history.push("/");
+				console.log(history);
 			}
 		};
 
@@ -46,8 +47,8 @@ function SignUp(props) {
 				password,
 			});
 
-			props.history.push("/login");
-			toast.success("Sweet, lets mix a drink!", {
+			history.push("/login");
+			toast.success("Sign up was successful! Please login.", {
 				position: "top-center",
 				autoClose: 5000,
 				hideProgressBar: false,

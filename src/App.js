@@ -1,51 +1,59 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import MainRouter from './MainRouter';
 import { ToastContainer } from 'react-toastify';
 import jwtDecode from "jwt-decode";
 
 import "react-toastify/dist/ReactToastify.css"
 
-export default class App extends Component {
-  state = {
-    user: null,
-  };
+function App () {
+  const [user, setUser] = useState(null);
 
-  componentDidMount() {
+  useEffect(() => {
     let getJwtToken = localStorage.getItem('jwtToken');
-    console.log(getJwtToken);
+      console.log(getJwtToken);
     if (getJwtToken) {
-      const currentTime = Date.now()/1000;
-      let decodedJwtToken = jwtDecode(getJwtToken);
-      console.log(decodedJwtToken);
-      if (decodedJwtToken.exp < currentTime) {
-        this.handleUserLogout();
-      } else {
-        this.handleUserLogin(decodedJwtToken)
-      }
-    }
-  }
+          const currentTime = Date.now()/1000;
+          let decodedJwtToken = jwtDecode(getJwtToken);
+          console.log(decodedJwtToken);
+          if (decodedJwtToken.exp < currentTime) {
+            handleUserLogout();
+          } else {
+            handleUserLogin(decodedJwtToken)
+          }
+        }
+  }, [])
+
+  // componentDidMount() {
+  //   let getJwtToken = localStorage.getItem('jwtToken');
+  //   console.log(getJwtToken);
+  //   if (getJwtToken) {
+  //     const currentTime = Date.now()/1000;
+  //     let decodedJwtToken = jwtDecode(getJwtToken);
+  //     console.log(decodedJwtToken);
+  //     if (decodedJwtToken.exp < currentTime) {
+  //       this.handleUserLogout();
+  //     } else {
+  //       this.handleUserLogin(decodedJwtToken)
+  //     }
+  //   }
+  // }
   
-  handleUserLogin = (user) => {
-    this.setState({ 
-      user: {
-        email: user.email,
-      },
-    });
+  function handleUserLogin (user) {
+    setUser({email: user.email})
   }
 
-  handleUserLogout = () => {
+  function handleUserLogout () {
     localStorage.removeItem('jwtToken');
-    this.setState({
-      user: null,
-    })
+    setUser(null);
   }
 
-  render() {
+  
     return (
       <>
         <ToastContainer />
-        <MainRouter user={this.state.user} handleUserLogin={this.handleUserLogin} handleUserLogout={this.handleUserLogout} />
+        <MainRouter user={user} handleUserLogin={handleUserLogin} handleUserLogout={handleUserLogout} />
       </>
     )
-  }
 }
+
+export default App;
