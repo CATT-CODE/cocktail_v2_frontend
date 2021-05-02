@@ -7,7 +7,6 @@ import ingredientsImg from "../../../images/ingredients.jpg";
 import "./Home.css";
 
 function Home(props) {
-	const [ctArray, setCtArray] = useState([]);
 	const [ctName, setCtName] = useState("");
 	const [ctDescription, setCtDescription] = useState("");
 	const [ctID, setCtID] = useState("");
@@ -18,7 +17,6 @@ function Home(props) {
 			const ctData = await axios.get(
 				"https://www.thecocktaildb.com/api/json/v1/1/random.php"
 			);
-			setCtArray(ctData.data.drinks[0]);
 			setCtName(ctData.data.drinks[0].strDrink);
 			setCtDescription(ctData.data.drinks[0].strCategory);
 			setCtID(Number(ctData.data.drinks[0].idDrink));

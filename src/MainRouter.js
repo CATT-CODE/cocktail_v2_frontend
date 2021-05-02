@@ -6,10 +6,10 @@ import NavBar from "./components/NavBar/NavBar";
 import SignUp from "./components/pages/SignUp/SignUp";
 import Login from "./components/pages/Login/Login";
 import PrivateRoute from "./components/AuthUser/PrivateRoute/PrivateRoute";
-// import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
-// import SearchIngredient from "./components/AuthUser/SearchIngredient";
-// import RandomSelection from "./components/AuthUser/RandomSelection";
-// import SearchDrinkName from "./components/AuthUser/SearchDrinkName";
+import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
+import SearchIngredient from "./components/AuthUser/SearchIngredient";
+import RandomSelection from "./components/AuthUser/RandomSelection";
+import SearchDrinkName from "./components/AuthUser/SearchDrinkName";
 
 const MainRouter = (props) => {
 	return (
@@ -30,12 +30,12 @@ const MainRouter = (props) => {
 					exact
 					path={"/random-selection"}
 					component={RandomSelection}
-				/>
+				/> */}
 				<PrivateRoute
 					exact
 					path="/recipe-detail/:id"
 					component={AuthCTDetail}
-				/> */}
+				/>
 				<Route
 					exact
 					path="/login"

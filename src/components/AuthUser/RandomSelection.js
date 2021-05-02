@@ -1,40 +1,44 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export class RandomSelection extends Component {
-	state = {
-		randomResults: [],
-	};
+function RandomSelection() {
+	
+	const [randomResult, setRandomResult] = useState([]);
 
-	async componentDidMount() {
-		try {
-			let payload = await axios.get(
-				`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`
-			);
-			const generateRandom = () => {
-				const randomArray = [];
-				for (let i = 0; i < 12; ) {
-					const random = Math.floor(Math.random() * 100);
-					if (!randomArray.includes(random)) {
-						randomArray.push(random);
-						i++;
-					}
-				}
-				return randomArray;
-			};
-			let randomIndex = await generateRandom();
-			let resultsArray = [];
-
-			await randomIndex.map((item) => {
-				return resultsArray.push(payload.data.drinks[`${item}`]);
-			});
-			this.setState({
-				randomResults: resultsArray,
-			});
-		} catch (e) {
-			console.log(e);
+	useEffect(() => {
+		const getData = async () => {
+			
 		}
-	}
+	})
+	// async componentDidMount() {
+	// 	try {
+	// 		let payload = await axios.get(
+	// 			`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`
+	// 		);
+	// 		const generateRandom = () => {
+	// 			const randomArray = [];
+	// 			for (let i = 0; i < 12; ) {
+	// 				const random = Math.floor(Math.random() * 100);
+	// 				if (!randomArray.includes(random)) {
+	// 					randomArray.push(random);
+	// 					i++;
+	// 				}
+	// 			}
+	// 			return randomArray;
+	// 		};
+	// 		let randomIndex = await generateRandom();
+	// 		let resultsArray = [];
+
+	// 		await randomIndex.map((item) => {
+	// 			return resultsArray.push(payload.data.drinks[`${item}`]);
+	// 		});
+	// 		this.setState({
+	// 			randomResults: resultsArray,
+	// 		});
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 	}
+	// }
 	showResultsArray = () => {
 		return this.state.randomResults.map((item) => {
 			return (

@@ -36,7 +36,7 @@ function NavBar(props) {
 										Logout
 									</a>
 								</li>
-								<nav class="nav" style={{ marginLeft: 1450 }}>
+								<nav class="nav" style={{ marginLeft: 1430 }}>
 									<li>
 										<a class="nav-link" href="/search-drink-name">
 											Drink Name

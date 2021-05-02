@@ -25,7 +25,7 @@ body {
 
 /*  Declare heights because of positioning of img element */
 .carousel-item {
-	margin-top: 3rem;
+	margin-top: 0rem;
 	height: 32rem;
 	background-color: #363636;
 }
@@ -42,7 +42,7 @@ body {
 }
 
 .marketing .col-lg-4 {
-	margin-top: 2rem;
+	margin-top: 0rem;
 	margin-bottom: 1.5rem;
 	text-align: center;
 }
