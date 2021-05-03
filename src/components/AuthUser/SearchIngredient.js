@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-function SearchIngredient () {
+function SearchIngredient (props) {
 	
 	const [searchIngredientArray, setSearchIngredientArray] = useState([]);
 	const [ingredientInput, setIngredientInput] = useState("");
@@ -50,12 +50,14 @@ function SearchIngredient () {
 			return (
 				<div class="col-lg-4" style={{ marginTop: 25 }} key={item.idDrink}>
 					<img
+						onClick={() => props.history.push(`/recipe-detail/${item.idDrink}`)}
 						src={item.strDrinkThumb}
 						alt="something"
 						className="bd-placeholder-img rounded-circle"
 						width="225"
 						height="225"
 						style={{
+							cursor: "pointer",
 							marginBottom: 15,
 							boxShadow:
 								"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",

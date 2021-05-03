@@ -28,7 +28,11 @@ function Home(props) {
 	return (
 		<body>
 			<div class="carousel slide" data-bs-ride="carousel">
-				<div id="my-carousel-bg" class="carousel-inner" style={{marginTop: -40}}>
+				<div
+					id="my-carousel-bg"
+					class="carousel-inner"
+					style={{ marginTop: -40 }}
+				>
 					<div class="carousel-item active">
 						{/* <img className="thumbnail" id="ctMainImg" src={this.state.ctImg} alt="something"/>  */}
 						<div className="w3-card-4">
@@ -37,6 +41,7 @@ function Home(props) {
 								src={ctImg}
 								alt="LAME"
 								style={{
+									cursor: "pointer",
 									width: 400,
 									marginLeft: 1215,
 									marginTop: 55,
@@ -92,6 +97,7 @@ function Home(props) {
 							width="225"
 							height="225"
 							style={{
+								cursor: "pointer",
 								marginBottom: 15,
 								boxShadow:
 									"0 4px 50px 50px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -108,13 +114,14 @@ function Home(props) {
 					</div>
 					<div class="col-lg-4">
 						<img
-						onClick={() => props.history.push(`/search-ingredient`)}
+							onClick={() => props.history.push(`/search-ingredient`)}
 							src={ingredientsImg}
 							alt="something"
 							className="bd-placeholder-img rounded-circle"
 							width="225"
 							height="225"
 							style={{
+								cursor: "pointer",
 								marginBottom: 15,
 								boxShadow:
 									"0 4px 50px 50px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
@@ -135,7 +142,7 @@ function Home(props) {
 					</div>
 					<div class="col-lg-4">
 						<img
-						onClick={() => props.history.push(`/random-selection`)}
+							onClick={() => props.history.push(`/random-selection`)}
 							src={randomImg}
 							alt="something"
 							href="/random-selection"
@@ -143,6 +150,7 @@ function Home(props) {
 							width="225"
 							height="225"
 							style={{
+								cursor: "pointer",
 								marginBottom: 15,
 								boxShadow:
 									"0 4px 50px 50px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",

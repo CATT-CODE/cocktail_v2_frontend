@@ -4,7 +4,6 @@ import "./AuthCTDetail.css";
 
 function AuthCTDetail (props) {
 
-	const [ctData, setCtData] = useState([]);
 	const [ingredientsArray, setIngredientsArray] = useState([]);
 	const [measurementsArray, setMeasurementsArray] = useState([]);
 	const[ctInstructions, setCtInstructions] = useState("");
@@ -16,7 +15,6 @@ function AuthCTDetail (props) {
 	useEffect(() => {
 		const getData = async () => {
 			let payload = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.match.params.id}`);
-			setCtData(payload.data.drinks[0])
 
 			let raw = Object.values(payload.data.drinks[0]);
 			let rawIngredients2 = raw.slice(17, 32);
