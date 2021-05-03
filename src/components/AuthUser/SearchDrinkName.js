@@ -1,31 +1,27 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 function SearchDrinkName () {
-	state = {
-		searchNameArray: [],
-		nameInput: "",
-		displayInput: "",
+
+	const [searchNameArray, setSearchNameArray] = useState([]);
+	const [nameInput, setNameInput] = useState("");
+	const [displayInput, setDisplayInput] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+
+	function handleInputOnChange (event) {
+		setNameInput(event.target.value);
 	};
 
-	handleInputOnChange = (event) => {
-		this.setState({
-			nameInput: event.target.value,
-		});
-	};
-
-	handleSearchOnClick = async () => {
-		this.setState({
-			isLoading: true,
-		});
+	async function handleSearchOnClick () {
+			setIsLoading(true);
 		try {
 			let payload = await axios.get(
-				`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${this.state.nameInput}`
+				`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${nameInput}`
 			);
 			if (payload.data.drinks === null || payload.data.length === 0) {
 				toast.error(
-					`No results for '${this.state.nameInput}', please try again`,
+					`No results for '${nameInput}', please try again`,
 					{
 						position: "top-center",
 						autoClose: 5000,
@@ -36,25 +32,21 @@ function SearchDrinkName () {
 						progress: undefined,
 					}
 				);
-				this.setState({
-					isLoading: false,
-					nameInput: "",
-				});
+					setIsLoading(false);
+					setNameInput("")
 				return;
 			}
-			this.setState({
-				isLoading: false,
-				searchNameArray: payload.data.drinks,
-				displayInput: this.state.nameInput,
-				nameInput: "",
-			});
+			setIsLoading(false);
+			setSearchNameArray(payload.data.drinks)
+			setDisplayInput(nameInput)
+			setNameInput("")
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
-	showSearchArray = () => {
-		return this.state.searchNameArray.map((item) => {
+	function showSearchArray () {
+		return searchNameArray.map((item) => {
 			return (
 				<div class="col-lg-4" style={{ marginTop: 25 }} key={item.idDrink}>
 					<img
@@ -97,12 +89,12 @@ function SearchDrinkName () {
 					<input
 						onKeyPress={(event) => {
 							if (event.key === "Enter") {
-								this.handleSearchOnClick();
+								handleSearchOnClick();
 							}
 						}}
 						type="text"
-						value={this.state.nameInput}
-						onChange={this.handleInputOnChange}
+						value={nameInput}
+						onChange={(e) => handleInputOnChange(e)}
 						name="nameInput"
 						class="form-control"
 						placeholder="Input A Drink Name"
@@ -110,23 +102,23 @@ function SearchDrinkName () {
 					<button
 						type="submit"
 						class="btn btn-outline-secondary"
-						onClick={this.handleSearchOnClick}
+						onClick={handleSearchOnClick}
 						id="nameInput"
 					>
 						Search
 					</button>
 				</div>
 				<div style={{ marginTop: 25 }}>
-					{this.state.isLoading ? (
+					{isLoading ? (
 						<div>...Loading</div>
 					) : (
 						<div>
-							{this.state.searchNameArray.length > 0 && (
+							{searchNameArray.length > 0 && (
 								<h2 class="text-muted">
-									Results for '<span>{this.state.displayInput}</span>'
+									Results for '<span>{displayInput}</span>'
 								</h2>
 							)}
-							<div className="row">{this.showSearchArray()}</div>
+							<div className="row">{showSearchArray()}</div>
 						</div>
 					)}
 				</div>

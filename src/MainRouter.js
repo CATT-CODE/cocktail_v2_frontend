@@ -21,11 +21,11 @@ const MainRouter = (props) => {
 					path={"/search-ingredient"}
 					component={SearchIngredient}
 				/>
-				{/* <PrivateRoute
+				<PrivateRoute
 					exact
 					path={"/search-drink-name"}
 					component={SearchDrinkName}
-				/> */}
+				/>
 				<PrivateRoute
 					exact
 					path={"/random-selection"}

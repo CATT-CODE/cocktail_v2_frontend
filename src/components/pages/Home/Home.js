@@ -28,11 +28,12 @@ function Home(props) {
 	return (
 		<body>
 			<div class="carousel slide" data-bs-ride="carousel">
-				<div id="my-carousel-bg" class="carousel-inner">
+				<div id="my-carousel-bg" class="carousel-inner" style={{marginTop: -40}}>
 					<div class="carousel-item active">
 						{/* <img className="thumbnail" id="ctMainImg" src={this.state.ctImg} alt="something"/>  */}
 						<div className="w3-card-4">
 							<img
+								onClick={() => props.history.push(`/recipe-detail/${ctID}`)}
 								src={ctImg}
 								alt="LAME"
 								style={{
@@ -84,6 +85,7 @@ function Home(props) {
 				<div class="row">
 					<div class="col-lg-4">
 						<img
+							onClick={() => props.history.push(`/search-drink-name`)}
 							src={nameImg}
 							alt="something"
 							className="bd-placeholder-img rounded-circle"
@@ -106,6 +108,7 @@ function Home(props) {
 					</div>
 					<div class="col-lg-4">
 						<img
+						onClick={() => props.history.push(`/search-ingredient`)}
 							src={ingredientsImg}
 							alt="something"
 							className="bd-placeholder-img rounded-circle"
@@ -132,6 +135,7 @@ function Home(props) {
 					</div>
 					<div class="col-lg-4">
 						<img
+						onClick={() => props.history.push(`/random-selection`)}
 							src={randomImg}
 							alt="something"
 							href="/random-selection"
