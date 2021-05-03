@@ -7,7 +7,7 @@ import SignUp from "./components/pages/SignUp/SignUp";
 import Login from "./components/pages/Login/Login";
 import PrivateRoute from "./components/AuthUser/PrivateRoute/PrivateRoute";
 import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
-// import SearchIngredient from "./components/AuthUser/SearchIngredient";
+import SearchIngredient from "./components/AuthUser/SearchIngredient";
 import RandomSelection from "./components/AuthUser/RandomSelection";
 import SearchDrinkName from "./components/AuthUser/SearchDrinkName";
 
@@ -16,11 +16,11 @@ const MainRouter = (props) => {
 		<Router user={props.user}>
 			<NavBar user={props.user} handleUserLogout={props.handleUserLogout} />
 			<Switch>
-				{/* <PrivateRoute
+				<PrivateRoute
 					exact
 					path={"/search-ingredient"}
 					component={SearchIngredient}
-				/> */}
+				/>
 				{/* <PrivateRoute
 					exact
 					path={"/search-drink-name"}

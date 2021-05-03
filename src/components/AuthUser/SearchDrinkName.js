@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export class SearchDrinkName extends Component {
+function SearchDrinkName () {
 	state = {
 		searchNameArray: [],
 		nameInput: "",
@@ -85,7 +85,6 @@ export class SearchDrinkName extends Component {
 		});
 	};
 
-	render() {
 		return (
 			<div class="container marketing">
 				<h1 style={{ marginBottom: 20, marginTop: 50 }} class="text-muted">
@@ -133,7 +132,6 @@ export class SearchDrinkName extends Component {
 				</div>
 			</div>
 		);
-	}
 }
 
 export default SearchDrinkName;

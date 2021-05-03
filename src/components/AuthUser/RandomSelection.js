@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function RandomSelection() {
-	
 	const [randomResults, setRandomResults] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
-			let payload = await axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail");
+			let payload = await axios.get(
+				"https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
+			);
 			const generateRandom = () => {
 				const randomArray = [];
 				for (let i = 0; i < 12; ) {
@@ -19,16 +20,22 @@ function RandomSelection() {
 				}
 				return randomArray;
 			};
+
 			let randomIndex = await generateRandom();
+
 			let resultsArray = [];
-			console.log(randomIndex);
+
 			await randomIndex.map((item) => {
 				return resultsArray.push(payload.data.drinks[`${item}`]);
 			});
+			
 			setRandomResults(resultsArray);
-		}
+		
+		};
+		
 		getData();
-	}, [])
+
+	}, []);
 
 	function showResultsArray() {
 		return randomResults.map((item) => {
@@ -60,19 +67,19 @@ function RandomSelection() {
 				</div>
 			);
 		});
-	};
-
-		return (
-			<div class="container marketing">
-				<h2
-					style={{ marginBottom: 20, marginTop: 20, textAlign: "center" }}
-					class="text-light"
-				>
-					Random Cocktails <span class="text-muted">To Try</span>
-				</h2>
-				<div class="row">{showResultsArray()}</div>
-			</div>
-		);
 	}
+
+	return (
+		<div class="container marketing">
+			<h2
+				style={{ marginBottom: 20, marginTop: 20, textAlign: "center" }}
+				class="text-light"
+			>
+				Random Cocktails <span class="text-muted">To Try</span>
+			</h2>
+			<div class="row">{showResultsArray()}</div>
+		</div>
+	);
+}
 
 export default RandomSelection;

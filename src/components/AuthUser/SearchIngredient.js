@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
@@ -17,11 +17,11 @@ function SearchIngredient () {
 			setIsLoading(true)
 		try {
 			let payload = await axios.get(
-				`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.state.ingredientInput}`
+				`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredientInput}`
 			);
 			if (payload.data === undefined || payload.data.length === 0) {
 				toast.error(
-					`No results for '${this.state.ingredientInput}', please try again`,
+					`No results for '${ingredientInput}', please try again`,
 					{
 						position: "top-center",
 						autoClose: 5000,
@@ -32,25 +32,21 @@ function SearchIngredient () {
 						progress: undefined,
 					}
 				);
-				this.setState({
-					setIsLoading(false)
-					ingredientInput: "",
-				});
+				setIsLoading(false)
+				setIngredientInput("")
 				return;
 			}
-			this.setState({
-				displayInput: this.state.ingredientInput,
-				searchIngredientArray: payload.data.drinks,
-				ingredientInput: "",
-				isLoading: false,
-			});
+			setDisplayInput(ingredientInput);
+			setSearchIngredientArray(payload.data.drinks);
+			setIngredientInput("");
+			setIsLoading(false);
 		} catch (e) {
 			console.log(e);
 		}
 	};
 
-	showSearchArray = () => {
-		return this.state.searchIngredientArray.map((item) => {
+	function showSearchArray () {
+		return searchIngredientArray.map((item) => {
 			return (
 				<div class="col-lg-4" style={{ marginTop: 25 }} key={item.idDrink}>
 					<img
@@ -92,11 +88,11 @@ function SearchIngredient () {
 				>
 					<input
 						type="text"
-						value={this.state.ingredientInput}
+						value={ingredientInput}
 						onChange={(e) => handleInputOnChange(e)}
 						onKeyPress={(event) => {
 							if (event.key === "Enter") {
-								this.handleSearchOnClick();
+								handleSearchOnClick();
 							}
 						}}
 						name="ingredientInput"
@@ -106,23 +102,23 @@ function SearchIngredient () {
 					<button
 						type="submit"
 						class="btn btn-outline-secondary"
-						onClick={this.handleSearchOnClick}
+						onClick={handleSearchOnClick}
 						id="ingredientInput"
 					>
 						Search
 					</button>
 				</div>
 				<div style={{ marginTop: 25 }}>
-					{this.state.isLoading ? (
+					{isLoading ? (
 						<div>...Loading</div>
 					) : (
 						<div>
-							{this.state.searchIngredientArray.length > 0 && (
+							{searchIngredientArray.length > 0 && (
 								<h2 class="text-muted">
-									Results for '<span>{this.state.displayInput}</span>'
+									Results for '<span>{displayInput}</span>'
 								</h2>
 							)}
-							<div className="row">{this.showSearchArray()}</div>
+							<div className="row">{showSearchArray()}</div>
 						</div>
 					)}
 				</div>
