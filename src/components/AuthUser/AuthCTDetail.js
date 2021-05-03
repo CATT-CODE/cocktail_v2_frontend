@@ -93,6 +93,15 @@ function AuthCTDetail(props) {
 			setIsToggle(false);
 			console.log(payload);
 		} catch (e) {
+			toast.error(`Message was not sent, try again!`, {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
 			console.log(e);
 		}
 	}
@@ -150,6 +159,13 @@ function AuthCTDetail(props) {
 									onClick={() => handleSendSms()}
 								>
 									Send Message
+								</button>
+								<button
+									class="btn btn-danger"
+									type="button"
+									onClick={() => setIsToggle(false)}
+								>
+									Cancel
 								</button>
 							</div>
 						</div>
