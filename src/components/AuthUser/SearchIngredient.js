@@ -1,24 +1,20 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export class SearchIngredient extends Component {
-	state = {
-		searchIngredientArray: [],
-		ingredientInput: "",
-		displayInput: "",
+function SearchIngredient () {
+	
+	const [searchIngredientArray, setSearchIngredientArray] = useState([]);
+	const [ingredientInput, setIngredientInput] = useState("");
+	const [displayInput, setDisplayInput] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	
+	function handleInputOnChange(event) {
+		setIngredientInput(event.target.value);
 	};
 
-	handleInputOnChange = (event) => {
-		this.setState({
-			ingredientInput: event.target.value,
-		});
-	};
-
-	handleSearchOnClick = async () => {
-		this.setState({
-			isLoading: true,
-		});
+	async function handleSearchOnClick () {
+			setIsLoading(true)
 		try {
 			let payload = await axios.get(
 				`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${this.state.ingredientInput}`
@@ -37,7 +33,7 @@ export class SearchIngredient extends Component {
 					}
 				);
 				this.setState({
-					isLoading: false,
+					setIsLoading(false)
 					ingredientInput: "",
 				});
 				return;
@@ -85,7 +81,6 @@ export class SearchIngredient extends Component {
 		});
 	};
 
-	render() {
 		return (
 			<div class="container marketing">
 				<h1 style={{ marginBottom: 20, marginTop: 50 }} class="text-muted">
@@ -98,7 +93,7 @@ export class SearchIngredient extends Component {
 					<input
 						type="text"
 						value={this.state.ingredientInput}
-						onChange={this.handleInputOnChange}
+						onChange={(e) => handleInputOnChange(e)}
 						onKeyPress={(event) => {
 							if (event.key === "Enter") {
 								this.handleSearchOnClick();
@@ -133,7 +128,6 @@ export class SearchIngredient extends Component {
 				</div>
 			</div>
 		);
-	}
 }
 
 export default SearchIngredient;

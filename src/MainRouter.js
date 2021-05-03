@@ -7,7 +7,7 @@ import SignUp from "./components/pages/SignUp/SignUp";
 import Login from "./components/pages/Login/Login";
 import PrivateRoute from "./components/AuthUser/PrivateRoute/PrivateRoute";
 import AuthCTDetail from "./components/AuthUser/AuthCTDetail";
-import SearchIngredient from "./components/AuthUser/SearchIngredient";
+// import SearchIngredient from "./components/AuthUser/SearchIngredient";
 import RandomSelection from "./components/AuthUser/RandomSelection";
 import SearchDrinkName from "./components/AuthUser/SearchDrinkName";
 
@@ -20,17 +20,17 @@ const MainRouter = (props) => {
 					exact
 					path={"/search-ingredient"}
 					component={SearchIngredient}
-				/>
-				<PrivateRoute
+				/> */}
+				{/* <PrivateRoute
 					exact
 					path={"/search-drink-name"}
 					component={SearchDrinkName}
-				/>
+				/> */}
 				<PrivateRoute
 					exact
 					path={"/random-selection"}
 					component={RandomSelection}
-				/> */}
+				/> 
 				<PrivateRoute
 					exact
 					path="/recipe-detail/:id"

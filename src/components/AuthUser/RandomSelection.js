@@ -3,44 +3,35 @@ import axios from "axios";
 
 function RandomSelection() {
 	
-	const [randomResult, setRandomResult] = useState([]);
+	const [randomResults, setRandomResults] = useState([]);
 
 	useEffect(() => {
 		const getData = async () => {
-			
+			let payload = await axios.get("https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail");
+			const generateRandom = () => {
+				const randomArray = [];
+				for (let i = 0; i < 12; ) {
+					const random = Math.floor(Math.random() * 100);
+					if (!randomArray.includes(random)) {
+						randomArray.push(random);
+						i++;
+					}
+				}
+				return randomArray;
+			};
+			let randomIndex = await generateRandom();
+			let resultsArray = [];
+			console.log(randomIndex);
+			await randomIndex.map((item) => {
+				return resultsArray.push(payload.data.drinks[`${item}`]);
+			});
+			setRandomResults(resultsArray);
 		}
-	})
-	// async componentDidMount() {
-	// 	try {
-	// 		let payload = await axios.get(
-	// 			`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail`
-	// 		);
-	// 		const generateRandom = () => {
-	// 			const randomArray = [];
-	// 			for (let i = 0; i < 12; ) {
-	// 				const random = Math.floor(Math.random() * 100);
-	// 				if (!randomArray.includes(random)) {
-	// 					randomArray.push(random);
-	// 					i++;
-	// 				}
-	// 			}
-	// 			return randomArray;
-	// 		};
-	// 		let randomIndex = await generateRandom();
-	// 		let resultsArray = [];
+		getData();
+	}, [])
 
-	// 		await randomIndex.map((item) => {
-	// 			return resultsArray.push(payload.data.drinks[`${item}`]);
-	// 		});
-	// 		this.setState({
-	// 			randomResults: resultsArray,
-	// 		});
-	// 	} catch (e) {
-	// 		console.log(e);
-	// 	}
-	// }
-	showResultsArray = () => {
-		return this.state.randomResults.map((item) => {
+	function showResultsArray() {
+		return randomResults.map((item) => {
 			return (
 				<div class="col-lg-4" key={item.idDrink}>
 					<img
@@ -71,7 +62,6 @@ function RandomSelection() {
 		});
 	};
 
-	render() {
 		return (
 			<div class="container marketing">
 				<h2
@@ -80,10 +70,9 @@ function RandomSelection() {
 				>
 					Random Cocktails <span class="text-muted">To Try</span>
 				</h2>
-				<div class="row">{this.showResultsArray()}</div>
+				<div class="row">{showResultsArray()}</div>
 			</div>
 		);
 	}
-}
 
 export default RandomSelection;
