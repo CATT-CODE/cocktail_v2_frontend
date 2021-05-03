@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 import "./AuthCTDetail.css";
 
-function AuthCTDetail (props) {
-
+function AuthCTDetail(props) {
 	const [ingredientsArray, setIngredientsArray] = useState([]);
 	const [measurementsArray, setMeasurementsArray] = useState([]);
-	const[ctInstructions, setCtInstructions] = useState("");
+	const [ctInstructions, setCtInstructions] = useState("");
 	const [ctCategory, setCtCategory] = useState("");
 	const [ctName, setCtName] = useState("");
 	const [ctGlass, setCtGlass] = useState("");
 	const [ctImg, setCtImg] = useState("");
-	const [toggleInput, setToggleInput] = useState("")
+	const [ctID, setCtID] = useState("");
+	const [toggleInput, setToggleInput] = useState("");
 	const [isToggle, setIsToggle] = useState(false);
-	
+
 	useEffect(() => {
 		const getData = async () => {
-			let payload = await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.match.params.id}`);
+			let payload = await axios.get(
+				`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${props.match.params.id}`
+			);
 
 			let raw = Object.values(payload.data.drinks[0]);
 			let rawIngredients2 = raw.slice(17, 32);
@@ -30,41 +33,68 @@ function AuthCTDetail (props) {
 			setCtCategory(payload.data.drinks[0].strCategory);
 			setCtName(payload.data.drinks[0].strDrink);
 			setCtGlass(payload.data.drinks[0].strGlass);
-			setCtImg(payload.data.drinks[0].strDrinkThumb)
-		}
+			setCtImg(payload.data.drinks[0].strDrinkThumb);
+			setCtID(Number(payload.data.drinks[0].idDrink));
+		};
 		getData();
-	}, [])
+	}, []);
 
-
-
-	function getMeasurementsList () {
+	function getMeasurementsList() {
 		return measurementsArray.map((item, index) => {
-			return (
-				<tr key={index}>
-					{item}
-				</tr>
-			);
+			return <tr key={index}>{item}</tr>;
 		});
-	};
+	}
 
-	function getIngredientsList () {
+	function getIngredientsList() {
 		return ingredientsArray.map((item, index) => {
-			return (
-				<tr key={index}>
-					{item}
-				</tr>
-			);
+			return <tr key={index}>{item}</tr>;
 		});
-	};
+	}
 
 	function ctInstructionsDisplay() {
-		let rawText = ctInstructions.split(".").map((item, i) => <p key={i}>{item + "."}</p>)
-		rawText.pop()
+		let rawText = ctInstructions
+			.split(".")
+			.map((item, i) => <p key={i}>{item + "."}</p>);
+		rawText.pop();
 		return rawText;
 	}
-		
-	function handleToggleOnChange (event) {
+
+	function handleToggleOnChange(event) {
 		setToggleInput(event.target.value);
+	}
+
+	async function handleSendSms() {
+		let recipeDetails = {
+			ctName,
+			ctID,
+			toggleInput: toggleInput.replace(/\D/g, ""),
+		};
+		console.log(recipeDetails);
+		try {
+			let jwtToken = localStorage.getItem("jwtToken");
+			let payload = await axios.post(
+				"http://localhost:3002/users/send-sms-message",
+				recipeDetails,
+				{
+					headers: {
+						authorization: `Bearer ${jwtToken}`,
+					},
+				}
+			);
+			toast.success(`Message successfully sent!`, {
+				position: "top-center",
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+			});
+			setIsToggle(false);
+			console.log(payload);
+		} catch (e) {
+			console.log(e);
+		}
 	}
 
 	return (
@@ -88,7 +118,7 @@ function AuthCTDetail (props) {
 						</thead>
 						<tbody>
 							<tr>
-								<td style={{  }}>{getIngredientsList()}</td>
+								<td>{getIngredientsList()}</td>
 								<td>{getMeasurementsList()}</td>
 							</tr>
 						</tbody>
@@ -96,7 +126,34 @@ function AuthCTDetail (props) {
 					<br />
 					<p class="lead">{ctInstructionsDisplay()}</p>
 					<br />
-					<button class="btn btn-secondary">Send Recipe to a Friend</button>
+					{!isToggle ? (
+						<button
+							class="btn btn-secondary"
+							type="button"
+							onClick={() => setIsToggle(true)}
+						>
+							Send Recipe to a Friend
+						</button>
+					) : (
+						<div style={{ width: "55%" }} class="input-group mb-3">
+							<input
+								class="form-control"
+								type="text"
+								onChange={(e) => handleToggleOnChange(e)}
+								placeholder="(XXX) XXX-XXXX"
+								value={toggleInput}
+							></input>
+							<div class="input-group-append">
+								<button
+									class="btn btn-secondary"
+									type="button"
+									onClick={() => handleSendSms()}
+								>
+									Send Message
+								</button>
+							</div>
+						</div>
+					)}
 				</div>
 
 				<div class="col-md-5">
