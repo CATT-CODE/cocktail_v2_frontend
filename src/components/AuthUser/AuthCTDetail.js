@@ -10,7 +10,9 @@ function AuthCTDetail (props) {
 	const [ctCategory, setCtCategory] = useState("");
 	const [ctName, setCtName] = useState("");
 	const [ctGlass, setCtGlass] = useState("");
-	const[ctImg, setCtImg] = useState("");
+	const [ctImg, setCtImg] = useState("");
+	const [toggleInput, setToggleInput] = useState("")
+	const [isToggle, setIsToggle] = useState(false);
 	
 	useEffect(() => {
 		const getData = async () => {
@@ -55,6 +57,16 @@ function AuthCTDetail (props) {
 		});
 	};
 
+	function ctInstructionsDisplay() {
+		let rawText = ctInstructions.split(".").map((item, i) => <p key={i}>{item + "."}</p>)
+		rawText.pop()
+		return rawText;
+	}
+		
+	function handleToggleOnChange (event) {
+		setToggleInput(event.target.value);
+	}
+
 	return (
 		<body class="featurette-divider">
 			<div class="row featurette">
@@ -82,7 +94,9 @@ function AuthCTDetail (props) {
 						</tbody>
 					</table>
 					<br />
-					<span class="lead">{ctInstructions}</span>
+					<p class="lead">{ctInstructionsDisplay()}</p>
+					<br />
+					<button class="btn btn-secondary">Send Recipe to a Friend</button>
 				</div>
 
 				<div class="col-md-5">
