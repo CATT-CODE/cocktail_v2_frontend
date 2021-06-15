@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Axios from "../lib/axios/Axios";
 import { toast } from "react-toastify";
 import "./AuthCTDetail.css";
 
@@ -69,19 +70,13 @@ function AuthCTDetail(props) {
 			ctID,
 			toggleInput: toggleInput.replace(/\D/g, ""),
 		};
-		console.log(recipeDetails);
 		try {
-			let jwtToken = localStorage.getItem("jwtToken");
-			let payload = await axios.post(
-				"http://localhost:3002/users/send-sms-message",
+			await Axios.post(
+				"/users/send-sms-message",
 				recipeDetails,
-				{
-					headers: {
-						authorization: `Bearer ${jwtToken}`,
-					},
-				}
 			);
-			toast.success(`Message successfully sent!`, {
+			await setIsToggle(false);
+			await toast.success(`Message successfully sent!`, {
 				position: "top-center",
 				autoClose: 5000,
 				hideProgressBar: false,
@@ -90,8 +85,6 @@ function AuthCTDetail(props) {
 				draggable: true,
 				progress: undefined,
 			});
-			setIsToggle(false);
-			console.log(payload);
 		} catch (e) {
 			toast.error(`Message was not sent, try again!`, {
 				position: "top-center",

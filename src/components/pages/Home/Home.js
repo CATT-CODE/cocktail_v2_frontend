@@ -43,7 +43,7 @@ function Home(props) {
 								style={{
 									cursor: "pointer",
 									width: 400,
-									marginLeft: 1215,
+									marginLeft: 935,
 									marginTop: 55,
 									boxShadow:
 										"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
